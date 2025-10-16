@@ -4,56 +4,64 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_chat.css') }}" />
-    <title>Chat de Turnos Médicos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <title>Chatbot - Portal Medifed</title>
 </head>
 <body>
-
-
-    <header class="navbar-container">
-        <nav class="navbar">
-            <div class="navbar-brand">
-   
-                <img src="{{ url_for('static', filename='img/isotipo_n.svg') }}" alt="Logo Medifed">
-                <a href="{{ url_for('portal') }}">Medifed</a>
+    <div class="portal-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='img/logo_comp_b.svg') }}" alt="Logo Medifed" class="logo-sidebar">
             </div>
-            <ul class="navbar-links">
-                <li><a href="{{ url_for('portal') }}">Inicio</a></li>
-                <li><a href="{{ url_for('turnos') }}">Turnos</a></li>
-                <li><a href="{{ url_for('miplan') }}">Mi Plan</a></li>
-            </ul>
-            <div class="navbar-logout">
-            
-                <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar Sesión</a>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="{{ url_for('portal') }}"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
+                    <li><a href="{{ url_for('turnos') }}"><i class="fa-solid fa-calendar-days"></i> <span>Turnos</span></a></li>
+                    <li><a href="{{ url_for('medicos') }}"><i class="fa-solid fa-user-doctor"></i> <span>Médicos</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-file-medical"></i> <span>Estudios</span></a></li>
+                    <li><a href="{{ url_for('contactoPortal') }}"><i class="fa-solid fa-envelope"></i> <span>Contacto</span></a></li>
+                    <li><a href="{{ url_for('miplan') }}"><i class="fa-solid fa-id-card"></i> <span>Mi Plan</span></a></li>
+                    <li><a href="#"><i class="fa-solid fa-file-invoice-dollar"></i> <span>Facturación</span></a></li>
+                    <li class="active"><a href="{{ url_for('chat') }}"><i class="fa-solid fa-comments"></i> <span>Chatbot</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+                <a href="{{ url_for('logout') }}" class="logout-button"><i class="fa-solid fa-right-from-bracket"></i> <span>Cerrar Sesión</span></a>
             </div>
-        </nav>
-    </header>
+        </aside>
 
+        <div class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>NOMBRE</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <span>Juand</span>
+                        <img src="https://placehold.co/40x40/6a44c7/FFFFFF?text=J" alt="Avatar de Usuario" class="user-avatar">
+                    </div>
+                </div>
+            </header>
 
-    <main>
-        <div class="chat-container">
-            <header>Chat para reservar turnos médicos</header>
-            <div id="chat-box"></div>
-            <div id="faq-container">
-                <strong>Preguntas frecuentes:</strong>
-                <div id="faq-buttons"></div>
-            </div>
-            <div class="input-area">
-                <input
-                    type="text"
-                    id="input"
-                    placeholder="Escribí tu pregunta..."
-                    autocomplete="off"
-                />
-                <button id="send">Enviar</button>
-            </div>
+            <main class="page-content">
+                <div class="chat-container">
+                    <header>Chat para reservar turnos médicos</header>
+                    <div id="chat-box"></div>
+                    <div id="faq-container">
+                        <strong>Preguntas frecuentes:</strong>
+                        <div id="faq-buttons"></div>
+                    </div>
+                    <div class="input-area">
+                        <input type="text" id="input" placeholder="Escribí tu pregunta..." autocomplete="off" />
+                        <button id="send">Enviar</button>
+                    </div>
+                </div>
+            </main>
         </div>
-    </main>
-    
-
-    <footer class="footer">
-        <p>&copy; 2025 Medifed. Todos los derechos reservados.</p>
-    </footer>
-
+    </div>
 
     <script>
         const chatBox = document.getElementById("chat-box");
@@ -117,3 +125,4 @@
     </script>
 </body>
 </html>
+
