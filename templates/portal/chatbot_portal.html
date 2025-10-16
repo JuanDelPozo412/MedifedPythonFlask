@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_chat.css') }}" />
+    <title>Chat de Turnos Médicos</title>
+</head>
+<body>
+
+
+    <header class="navbar-container">
+        <nav class="navbar">
+            <div class="navbar-brand">
+   
+                <img src="{{ url_for('static', filename='img/isotipo_n.svg') }}" alt="Logo Medifed">
+                <a href="{{ url_for('portal') }}">Medifed</a>
+            </div>
+            <ul class="navbar-links">
+                <li><a href="{{ url_for('portal') }}">Inicio</a></li>
+                <li><a href="{{ url_for('turnos') }}">Turnos</a></li>
+                <li><a href="{{ url_for('miplan') }}">Mi Plan</a></li>
+            </ul>
+            <div class="navbar-logout">
+            
+                <a href="{{ url_for('logout') }}" class="btn-logout">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="chat-container">
+            <header>Chat para reservar turnos médicos</header>
+            <div id="chat-box"></div>
+            <div id="faq-container">
+                <strong>Preguntas frecuentes:</strong>
+                <div id="faq-buttons"></div>
+            </div>
+            <div class="input-area">
+                <input
+                    type="text"
+                    id="input"
+                    placeholder="Escribí tu pregunta..."
+                    autocomplete="off"
+                />
+                <button id="send">Enviar</button>
+            </div>
+        </div>
+    </main>
+    
+
+    <footer class="footer">
+        <p>&copy; 2025 Medifed. Todos los derechos reservados.</p>
+    </footer>
+
+
+    <script>
+        const chatBox = document.getElementById("chat-box");
+        const faqButtonsContainer = document.getElementById("faq-buttons");
+        const input = document.getElementById("input");
+        const sendBtn = document.getElementById("send");
+
+        const faq = [
+            "Como reservo turno?", "Como cambio de medico?", "Como cambio de dia?",
+            "Como cambio de hora?", "Como cambio de lugar?", "Como cancelo turno?",
+        ];
+
+        faq.forEach((q) => {
+            const btn = document.createElement("button");
+            btn.textContent = q;
+            btn.onclick = () => {
+                input.value = q;
+                sendMessage();
+            };
+            faqButtonsContainer.appendChild(btn);
+        });
+
+        function addMessage(message, isUser = false) {
+            const div = document.createElement("div");
+            div.classList.add("message", isUser ? "user" : "bot");
+            div.textContent = message;
+            chatBox.appendChild(div);
+            setTimeout(() => { chatBox.scrollTop = chatBox.scrollHeight; }, 0);
+        }
+
+        async function sendMessage() {
+            const prompt = input.value.trim();
+            if (!prompt) return;
+            addMessage(prompt, true);
+            input.value = "";
+            input.disabled = true;
+            sendBtn.disabled = true;
+
+            try {
+                const res = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt }),
+                });
+                const data = await res.json();
+                addMessage(data.response, false);
+            } catch (error) {
+                console.error("Error:", error);
+                addMessage("Error: No se pudo obtener respuesta del servidor.", false);
+            } finally {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+
+        sendBtn.addEventListener("click", sendMessage);
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") sendMessage();
+        });
+    </script>
+</body>
+</html>

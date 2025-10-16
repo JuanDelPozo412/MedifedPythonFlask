@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f5f8fa;
+    padding-top: 80px; 
+}
+
+main {
+    padding: 20px 0 80px 0;
+}
+
+.chat-container {
+    width: 450px;
+    max-width: 95%;
+    height: 70vh;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.chat-container > header {
+    background: #894EFF;
+    color: white;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+#chat-box {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #fdfdff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 75%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.user {
+    background: #894EFF;
+    color: white;
+    align-self: flex-end; 
+    border-bottom-right-radius: 4px;
+}
+
+.bot {
+    background: #f1f0f0;
+    color: #333;
+    align-self: flex-start; 
+    border-bottom-left-radius: 4px;
+}
+
+.input-area {
+    display: flex;
+    border-top: 1px solid #ddd;
+    padding: 10px;
+    background: white;
+    flex-shrink: 0;
+}
+
+#input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#input:focus {
+    border-color: #894EFF;
+}
+
+#send {
+    margin-left: 10px;
+    background: #894EFF;
+    border: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 20px;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#send:hover {
+    background: #7a3ee6;
+}
+
+#faq-container {
+    padding: 10px 15px;
+    background: white;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+#faq-container strong {
+    font-size: 1rem;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+#faq-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+#faq-buttons button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 15px;
+    background: #e9eff6;
+    color: #333;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+#faq-buttons button:hover {
+    background: #dbe4f0;
+}
+
+
+.navbar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    z-index: 1000;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    height: 70px;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar-brand a {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.navbar-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar-links a:hover {
+    color: #894EFF;
+}
+
+.btn-logout {
+    background-color: #894EFF;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-logout:hover {
+    background-color: #894EFF;
+}
+
+.footer {
+    background-color: #333;
+    color: #f1f0f0;
+    text-align: center;
+    padding: 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}

@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6;
+}
+
+.navbar-portal-home{
+    background-color: #894EFF;
+    height: 50px;
+    width: 100%;
+}
+
+.links-home {
+    margin-left: 70rem;
+    display: flex;
+    gap: 20px;
+    list-style: none;
+   
+} 
+
+.links-home li a{
+    text-decoration: none !important;
+    color: white;
+}
