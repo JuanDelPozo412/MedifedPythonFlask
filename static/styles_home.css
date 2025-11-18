@@ -1,84 +1,142 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f4f7f6;
+  font-family: "Inter", sans-serif;
+  background-color: #f4f7f6;
 }
 
-
 .navbar-home {
-    background-color: #894EFF;
-    width: 100%;
-    padding: 20px 0; 
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: #894eff;
+  width: 100%;
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .container-nav {
-    width: 90%;
-    max-width: 1200px; 
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center; 
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logo {
-    width: 80px;
-    height: auto; 
-    display: block;
+  width: 80px;
+  height: auto;
+  display: block;
 }
 
 .links-home {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    list-style: none;
-} 
-
-.links-home a {
-    text-decoration: none;
-    color: white;
-    font-weight: 500;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
 }
 
+.links-home a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
 
 .links-home a:not(.btn-login):hover {
-    background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .btn-login {
-    background-color: white;
-    color: #894EFF !important; 
-    font-weight: 700 !important;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: transform 0.2s ease, background-color 0.3s ease;
+  background-color: white;
+  color: #894eff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 .btn-login:hover {
-    background-color: #f0e9ff !important;
-    transform: translateY(-2px); }
-
+  background-color: #f0e9ff !important;
+  transform: translateY(-2px);
+}
 
 .footer-home {
-    background-color: #333;
-    color: #f1f0f0;
-    text-align: center;
-    padding: 20px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+  background-color: #333;
+  color: #f1f0f0;
+  text-align: center;
+  padding: 20px;
+  position: end;
+  width: 100%;
 }
 
 .carrousel-home {
-    height: 700px;
+  height: 700px;
+  width: 100%;
+}
+
+.carrousel-container {
     width: 100%;
+    max-width: none;
+    margin: 0;
+    border: none;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
+.carrousel-slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carrousel-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carrousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.btn-prev {
+  left: 10px;
+}
+
+.btn-next {
+  right: 10px;
 }

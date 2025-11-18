@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles_estudios.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Estudios Médicos - Portal Medifed</title>
+  </head>
+  <body>
+    <div class="portal-layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="{{ url_for('static', filename='img/logo_comp_b.svg') }}"
+            alt="Logo Medifed"
+            class="logo-sidebar"
+          />
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="{{ url_for('portal') }}"
+                ><i class="fa-solid fa-house"></i> <span>Inicio</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('turnos') }}"
+                ><i class="fa-solid fa-calendar-days"></i>
+                <span>Turnos</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('medicos') }}"
+                ><i class="fa-solid fa-user-doctor"></i> <span>Médicos</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="{{ url_for('estudios') }}"
+                ><i class="fa-solid fa-file-medical"></i>
+                <span>Estudios</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('contactoPortal') }}"
+                ><i class="fa-solid fa-envelope"></i> <span>Contacto</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('miplan') }}"
+                ><i class="fa-solid fa-id-card"></i> <span>Mi Plan</span></a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>Facturación</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('chat') }}"
+                ><i class="fa-solid fa-comments"></i> <span>Chatbot</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+          <a href="{{ url_for('logout') }}" class="logout-button"
+            ><i class="fa-solid fa-right-from-bracket"></i>
+            <span>Cerrar Sesión</span></a
+          >
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <header class="top-header">
+          <div class="header-left">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>NOMBRE</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="header-right">
+            <div class="user-info">
+              <span>Juand</span>
+              <img
+                src="https://placehold.co/40x40/6a44c7/FFFFFF?text=J"
+                alt="Avatar de Usuario"
+                class="user-avatar"
+              />
+            </div>
+          </div>
+        </header>
+
+        <main class="page-content">
+          <div class="estudios-container">
+            <div class="page-header">
+              <div class="header-content">
+                <i class="fa-solid fa-file-medical"></i>
+                <div>
+                  <h1>Mis Estudios Médicos</h1>
+                  <p>
+                    Accede a todos tus estudios, análisis y radiografías en un
+                    solo lugar
+                  </p>
+                </div>
+              </div>
+              <form
+                action="{{ url_for('upload_file') }}"
+                method="POST"
+                enctype="multipart/form-data"
+              >
+                <label
+                  class="btn-primary"
+                  style="cursor: pointer; display: inline-block; padding: 10px"
+                >
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  Subir Estudio
+                  <input
+                    type="file"
+                    name="file"
+                    style="display: none"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onchange="this.form.submit()"
+                  />
+                </label>
+              </form>
+            </div>
+
+            <div class="studies-section">
+              <h2>
+                <i class="fa-solid fa-x-ray"></i>
+                Radiografías e Imágenes
+              </h2>
+              <div id="studies-grid" class="studies-grid"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      async function cargarEstudios() {
+        try {
+          const response = await fetch("/listar-archivos");
+          const data = await response.json();
+          const grid = document.getElementById("studies-grid");
+
+          if (data.archivos && data.archivos.length > 0) {
+            data.archivos.forEach((archivo) => {
+              const card = document.createElement("div");
+              card.className = "study-card";
+              card.innerHTML = `
+            <div class="card-icon radiografia">
+              <i class="fa-solid fa-x-ray"></i>
+            </div>
+            <div class="card-content">
+              <h3>${archivo.nombre}</h3>
+              <p class="study-date">
+                <i class="fa-solid fa-calendar"></i>
+                ${new Date(archivo.fecha).toLocaleDateString("es-ES")}
+              </p>
+              <p class="study-doctor">
+                <i class="fa-solid fa-file"></i>
+                ${archivo.tamaño_mb} MB
+              </p>
+              <span class="status-badge completed">Disponible</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn-icon" title="Ver estudio" onclick="window.open('${
+                archivo.url
+              }', '_blank')">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+              <a href="${archivo.url}" download="${
+                archivo.nombre
+              }" class="btn-icon" title="Descargar">
+                <i class="fa-solid fa-download"></i>
+              </a>
+              <button class="btn-icon" title="Eliminar" onclick="eliminarArchivo('${
+                archivo.nombre
+              }', this.closest('.study-card'))">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          `;
+              grid.appendChild(card);
+            });
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      async function eliminarArchivo(filename, cardElement) {
+        if (!confirm(`¿Eliminar "${filename}"?`)) {
+          return;
+        }
+
+        try {
+          const response = await fetch("/eliminar-archivo", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ filename: filename }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            cardElement.remove();
+            alert("Archivo eliminado correctamente");
+          } else {
+            alert("Error: " + data.error);
+          }
+        } catch (error) {
+          alert("Error al eliminar el archivo");
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", cargarEstudios);
+    </script>
+  </body>
+</html>

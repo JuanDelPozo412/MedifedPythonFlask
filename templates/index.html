@@ -1,57 +1,151 @@
-
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/styles_home.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../static/styles_home.css">
-  <title>Document</title>
-
-</head>
-
-<body>
-  <header>
-    <nav class="navbar-home">
+  <body>
+    <header>
+      <nav class="navbar-home">
         <div class="container-nav">
-            <div class="logo-container">
-                <a href="{{ url_for('root') }}">
-                    <img src="{{ url_for('static', filename='img/logo_comp_b.svg') }}" alt="Medifed Logo" class="logo">
-                </a>
-            </div>
-            <ul class="links-home">
-                <li><a href="{{ url_for('register') }}">Registro</a></li>
-                <li><a href="#">Información</a></li>
-                <li><a href="#">Encontranos</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="{{ url_for('login') }}" class="btn-login">Iniciar Sesión</a></li>
-            </ul>
+          <div class="logo-container">
+            <a href="{{ url_for('root') }}">
+              <img
+                src="{{ url_for('static', filename='img/logo_comp_b.svg') }}"
+                alt="Medifed Logo"
+                class="logo"
+              />
+            </a>
+          </div>
+          <ul class="links-home">
+            <li><a href="{{ url_for('register') }}">Registro</a></li>
+            <li><a href="#">Información</a></li>
+            <li><a href="#">Encontranos</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li>
+              <a href="{{ url_for('login') }}" class="btn-login"
+                >Iniciar Sesión</a
+              >
+            </li>
+          </ul>
         </div>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-  <main>
-    <section=class="carrousel-home">
-      <h2>CARROUSEL</h2>
+    <main>
+     <div class="container my-5"> <div id="carouselExample" class="carousel slide mi-carrusel-personalizado rounded overflow-hidden">
+    
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="/static/img-carrousel/foto1.webp"
+          class="d-flex w-100"
+          alt="..."
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="/static/img-carrousel/foto2.webp"
+          class="d-flex w-100"
+          alt="..."
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="/static/img-carrousel/foto3.webp"
+          class="d-flex w-100"
+          alt="..."
+        />
+      </div>
+    </div>
+    
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExample"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExample"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div> </div> ```
 
-    </section>
-    <section>
 
-      <h2>NOVEDADES</h2>
-    </section>
+      
+  <section class="my-5">
 
+    <div class="row g-4">
 
-  </main>
-  <footer class="footer-home">
-    <p>&copy; 2025 Medifed. Todos los derechos reservados.</p>
-  </footer>
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="..." class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up
+              the bulk of the card’s content.
+            </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
 
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="..." class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up
+              the bulk of the card’s content.
+            </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
 
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="..." class="card-img-top" alt="..." />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up
+              the bulk of the card’s content.
+            </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
 
+    </div> </section>
+    </main>
+    <footer class="footer-home mt-10">
+      <p>&copy; 2025 Medifed. Todos los derechos reservados.</p>
+    </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"></script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, redirect, render_template, request, url_for
+from flask import Flask, jsonify, redirect, render_template, request, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt 
 from flask_login import (
@@ -6,7 +6,9 @@ from flask_login import (
 )
 from transformers import pipeline
 from dotenv import load_dotenv
+from werkzeug.utils import secure_filename
 import os
+import boto3
 
 load_dotenv()
 
@@ -23,6 +25,21 @@ login_manager = LoginManager(app)
 
 #Reedireccion al login si se quiere entrar sin auth
 login_manager.login_view = "login" 
+
+
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=os.getenv('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
+    region_name=os.getenv('AWS_REGION')
+)
+
+BUCKET_NAME = os.getenv('S3_BUCKET_NAME')
+ALLOWED_EXTENSIONS = {'pdf', 'jpg', 'jpeg', 'png'}
+
+def allowed_file(filename):
+    """Verifica si la extensión del archivo es permitida"""
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 class User(UserMixin, db.Model):
@@ -101,23 +118,16 @@ def miplan():
 def turnos():
      return render_template("./portal/turnos_portal.html")
 
+@app.route('/estudios')
+@login_required
+def estudios():
+     return render_template("./portal/estudios_portal.html")
+
 @app.route('/contacto_portal')
 @login_required
 def contactoPortal():
      return render_template("./portal/contacto_portal.html")
      
-     
-
-# @app.route('/auth', methods=['POST'])
-# def auth():
-#      email_form = request.form.get('email')
-#      contrasena_form = request.form.get('password')
-
-#      if email_form == USUARIO_PRUEBA and contrasena_form == CONTRASENA_PRUEBA:
-#           return redirect(url_for('portal'))
-#      else:
-#           return redirect(url_for('error'))
-
 
 @app.route("/logout")
 @login_required
@@ -126,9 +136,145 @@ def logout():
     return redirect(url_for("root"))
 
 
+# FUNCIONES BUCKETS 
+@app.route('/upload_file', methods=['POST'])
+@login_required
+def upload_file():
 
-# if not mitoken:
-#      raise ValueError("La variable de entorno OPENAI_API_KEY no esta configurada correctamente.")
+    if 'file' not in request.files:
+        flash("No se envió ningún archivo", "error")
+        return redirect(url_for('estudios'))
+    
+    file = request.files['file']
+    
+ 
+    if file.filename == '':
+        flash("No se seleccionó ningún archivo", "error")
+        return redirect(url_for('estudios'))
+    
+ 
+    if not allowed_file(file.filename):
+        flash("Tipo de archivo no permitido. Solo se permiten PDF, JPG, JPEG y PNG", "error")
+        return redirect(url_for('estudios'))
+    
+    try:
+   
+        filename = secure_filename(file.filename)
+        
+        user_id = current_user.id
+        s3_key = f"estudios/user_{user_id}/{filename}"
+        
+
+        s3_client.upload_fileobj(
+            file,
+            BUCKET_NAME,
+            s3_key,
+            ExtraArgs={
+                'ContentType': file.content_type,
+                'ContentDisposition': 'inline'
+            }
+        )
+        
+        flash(f"Archivo '{filename}' subido exitosamente", "success")
+        print(f"[SUCCESS] Archivo subido: {s3_key}")
+        
+    except Exception as e:
+        flash(f" Error al subir el archivo: {str(e)}", "error")
+        print(f"[ERROR] Error en upload: {str(e)}")
+    
+    return redirect(url_for('estudios'))
+
+
+@app.route('/listar-archivos', methods=['GET'])
+@login_required
+def list_files():
+    try:
+        user_id = current_user.id
+        prefix = f"estudios/user_{user_id}/"
+        
+
+        response = s3_client.list_objects_v2(
+            Bucket=BUCKET_NAME,
+            Prefix=prefix
+        )
+        
+        if 'Contents' not in response:
+            return jsonify({
+                "archivos": [], 
+                "mensaje": "No tienes estudios médicos cargados",
+                "total": 0
+            })
+        
+ 
+        files = []
+        for obj in response['Contents']:
+         
+            if obj['Key'].endswith('/'):
+                continue
+                
+           
+            url = s3_client.generate_presigned_url(
+                'get_object',
+                Params={
+                    'Bucket': BUCKET_NAME,
+                    'Key': obj['Key']
+                },
+                ExpiresIn=3600  
+            )
+            
+      
+            nombre_archivo = obj['Key'].split('/')[-1]
+            
+            files.append({
+                'nombre': nombre_archivo,
+                'key': obj['Key'],
+                'tamaño': obj['Size'],
+                'tamaño_mb': round(obj['Size'] / (1024 * 1024), 2),
+                'fecha': obj['LastModified'].isoformat(),
+                'url': url
+            })
+        
+        return jsonify({
+            "archivos": files,
+            "total": len(files)
+        })
+        
+    except Exception as e:
+        print(f"[ERROR] Error al listar archivos: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/eliminar-archivo', methods=['POST'])
+@login_required
+def delete_file():
+    """Elimina un archivo médico del usuario en S3"""
+    try:
+        data = request.get_json()
+        filename = data.get('filename')
+        
+        if not filename:
+            return jsonify({"error": "No se especificó el archivo"}), 400
+        
+        user_id = current_user.id
+        s3_key = f"estudios/user_{user_id}/{filename}"
+        
+     
+        s3_client.delete_object(
+            Bucket=BUCKET_NAME,
+            Key=s3_key
+        )
+        
+        return jsonify({
+            "mensaje": f"Archivo '{filename}' eliminado correctamente",
+            "success": True
+        })
+        
+    except Exception as e:
+        print(f"[ERROR] Error al eliminar archivo: {str(e)}")
+        return jsonify({"error": str(e)}), 500
+
+
+
 
 qa_pipeline = pipeline(
     "question-answering",
@@ -192,12 +338,15 @@ def faqs():
      ]
      return jsonify(preguntas_frecuentes)
 
+    
+
 
 with app.app_context():
     db.create_all()
 
 if __name__ == '__main__':
        app.run(debug=True)
+
 
 
 
