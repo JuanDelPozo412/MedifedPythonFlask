@@ -151,7 +151,6 @@ body {
   flex-grow: 1;
 }
 
-/* Estilos específicos de Contacto */
 .contact-container {
   max-width: 900px;
   margin: 0 auto;
@@ -327,7 +326,6 @@ body {
   font-size: 0.85rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .portal-layout {
     grid-template-columns: 1fr;

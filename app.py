@@ -18,9 +18,6 @@ import pyrebase
 
 load_dotenv()
 
-
-# CONFIGURACION FIREBASE
-
 firebaseConfig = {
     "apiKey": os.getenv("FIREBASE_API_KEY"),
     "authDomain": os.getenv("FIREBASE_AUTH_DOMAIN"),
@@ -44,7 +41,7 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 
-# Reedireccion al login si se quiere entrar sin auth
+
 login_manager.login_view = "login"
 
 
@@ -71,7 +68,6 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(20), default="paciente", nullable=False)
 
 
-# FUNCIONES TURNO Y MODELO
 class Turno(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -87,26 +83,57 @@ class Turno(db.Model):
 @login_required
 def reservar_turno():
     if request.method == "POST":
-        fecha = request.form["fecha"]
-        hora = request.form["hora"]
-        especialidad = request.form["especialidad"]
-        motivo = request.form["motivo"]
+        try:
 
-        nuevo_turno = Turno(
-            user_id=current_user.id,
-            fecha=fecha,
-            hora=hora,
-            especialidad=especialidad,
-            motivo=motivo,
-        )
+            print("Datos recibidos:", request.form)
 
-        db.session.add(nuevo_turno)
-        db.session.commit()
+            fecha = request.form["fecha"]
+            hora = request.form["hora"]
+            especialidad = request.form["especialidad"]
+            motivo = request.form["motivo"]
 
-        flash("¡Turno solicitado con éxito!", "success")
-        return redirect(url_for("portal"))
+            nuevo_turno = Turno(
+                user_id=current_user.id,
+                fecha=fecha,
+                hora=hora,
+                especialidad=especialidad,
+                motivo=motivo,
+            )
 
-    return render_template("./portal/turnos_portal.html")
+            db.session.add(nuevo_turno)
+            db.session.commit()
+            print("¡Turno guardado en DB!")
+
+            flash("¡Turno solicitado con éxito!", "success")
+
+            return redirect(url_for("reservar_turno"))
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"ERROR AL GUARDAR TURNO: {e}")
+            flash(f"Error al guardar: {str(e)}", "error")
+
+    mis_turnos = (
+        Turno.query.filter_by(user_id=current_user.id).order_by(Turno.id.desc()).all()
+    )
+    return render_template("./portal/turnos_portal.html", turnos=mis_turnos)
+
+
+@app.route("/cancelar-turno/<int:id>", methods=["POST"])
+@login_required
+def cancelar_turno(id):
+    turno_a_cancelar = Turno.query.get_or_404(id)
+
+    if turno_a_cancelar.user_id != current_user.id:
+        flash("No tienes permiso para cancelar este turno.", "error")
+        return redirect(url_for("reservar_turno"))
+
+    db.session.delete(turno_a_cancelar)
+
+    db.session.commit()
+    flash("El turno ha sido cancelado.", "success")
+
+    return redirect(url_for("reservar_turno"))
 
 
 @login_manager.user_loader
@@ -167,10 +194,6 @@ def login():
         firebase_app_id=os.getenv("FIREBASE_APP_ID"),
     )
 
-
-# LOGIN DE GOOGLE
-
-
 @app.route("/login_google", methods=["POST"])
 def login_google():
     data = request.get_json()
@@ -229,8 +252,6 @@ def register():
 def error():
     return render_template("error_account.html")
 
-
-# RUTAS PORTAL
 @app.route("/portal")
 @login_required
 def portal():
@@ -279,8 +300,6 @@ def logout():
     logout_user()
     return redirect(url_for("root"))
 
-
-# FUNCIONES BUCKETS
 @app.route("/upload_file", methods=["POST"])
 @login_required
 def upload_file():

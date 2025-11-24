@@ -53,12 +53,6 @@
             </li>
 
             <li>
-              <a href="#">
-                <i class="fa-solid fa-file-invoice-dollar"></i>
-                <span>Facturación</span>
-              </a>
-            </li>
-            <li>
               <a href="{{ url_for('chat') }}">
                 <i class="fa-solid fa-comments"></i> <span>Chatbot</span>
               </a>
@@ -193,6 +187,69 @@
                 </button>
               </div>
             </form>
+          </div>
+          <div class="page-header" style="margin-top: 3rem">
+            <div class="header-content">
+              <i class="fa-solid fa-list-check"></i>
+              <div>
+                <h2>Mis Turnos Reservados</h2>
+                <p>Gestioná tus próximas citas médicas</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card">
+            {% if turnos %}
+            <div class="table-responsive">
+              <table class="table-turnos">
+                <thead>
+                  <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Especialidad</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for turno in turnos %}
+                  <tr>
+                    <td class="data-label">{{ turno.fecha }}</td>
+                    <td class="data-label">{{ turno.hora }}</td>
+                    <td>{{ turno.especialidad }}</td>
+                    <td>
+                      <span
+                        class="badge {{ 'badge-success' if turno.estado == 'Confirmado' else 'badge-warning' }}"
+                      >
+                        {{ turno.estado }}
+                      </span>
+                    </td>
+                    <td>
+                      <form
+                        action="{{ url_for('cancelar_turno', id=turno.id) }}"
+                        method="POST"
+                        onsubmit="return confirm('¿Estás seguro de cancelar este turno?');"
+                      >
+                        <button
+                          type="submit"
+                          class="btn-cancelar"
+                          title="Cancelar Turno"
+                        >
+                          <i class="fa-solid fa-trash"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            {% else %}
+            <div class="empty-state">
+              <i class="fa-regular fa-calendar-xmark"></i>
+              <p>No tenés turnos reservados actualmente.</p>
+            </div>
+            {% endif %}
           </div>
         </main>
       </div>
