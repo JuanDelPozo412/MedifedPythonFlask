@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Panel Médico</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-primary">Panel de Gestión Médica General</h2>
+        <span class="badge bg-primary fs-6"
+          >Dr. {{ current_user.username }}</span
+        >
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div
+        class="alert alert-{{ 'danger' if category == 'error' else 'success' }} alert-dismissible fade show"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% endwith %}
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle">
+              <thead class="table-dark">
+                <tr>
+                  <th>Paciente</th>
+                  <th>Especialidad</th>
+                  <th>Fecha y Hora</th>
+                  <th>Motivo</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for turno in turnos %}
+                <tr>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div class="ms-2">
+                        <p class="mb-0 fw-bold">
+                          {{ turno.paciente.username }}
+                        </p>
+                        <small class="text-muted"
+                          >ID: {{ turno.paciente.id }}</small
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{ turno.especialidad }}</td>
+                  <td>
+                    {{ turno.fecha }} <br />
+                    <small>{{ turno.hora }}</small>
+                  </td>
+                  <td>{{ turno.motivo }}</td>
+                  <td>
+                    <span class="badge bg-warning text-dark"
+                      >{{ turno.estado }}</span
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex gap-2">
+                      <form
+                        action="{{ url_for('confirmar_turno', turno_id=turno.id) }}"
+                        method="POST"
+                      >
+                        <button
+                          type="submit"
+                          class="btn btn-success btn-sm"
+                          title="Confirmar Turno"
+                        >
+                          <i class="fa-solid fa-check"></i>
+                        </button>
+                      </form>
+
+                      <button
+                        type="button"
+                        class="btn btn-info btn-sm text-white"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalEstudios{{ turno.id }}"
+                        title="Ver Estudios"
+                      >
+                        <i class="fa-solid fa-file-medical"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <div
+                  class="modal fade"
+                  id="modalEstudios{{ turno.id }}"
+                  tabindex="-1"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header bg-light">
+                        <h5 class="modal-title">
+                          Estudios de {{ turno.paciente.username }}
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        {% set estudios = get_estudios(turno.paciente.id) %} {%
+                        if estudios %}
+                        <div class="list-group">
+                          {% for estudio in estudios %}
+                          <div
+                            class="list-group-item d-flex justify-content-between align-items-center"
+                          >
+                            <span
+                              ><i class="fa-regular fa-file-image me-2"></i> {{
+                              estudio.nombre }}</span
+                            >
+                            <a
+                              href="{{ estudio.url }}"
+                              target="_blank"
+                              class="btn btn-primary btn-sm"
+                            >
+                              <i class="fa-solid fa-eye"></i> Ver
+                            </a>
+                          </div>
+                          {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-warning mb-0">
+                          <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                          Este paciente no tiene estudios cargados.
+                        </div>
+                        {% endif %}
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                        >
+                          Cerrar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% else %}
+                <tr>
+                  <td colspan="6" class="text-center py-4">
+                    No hay turnos pendientes de gestión.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-secondary"
+          >Cerrar sesion</a
+        >
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

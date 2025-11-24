@@ -10,7 +10,7 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
-    <title>Document</title>
+    <title>Medifed - Inicio</title>
   </head>
 
   <body>
@@ -42,103 +42,310 @@
     </header>
 
     <main>
-     <div class="container my-5"> <div id="carouselExample" class="carousel slide mi-carrusel-personalizado rounded overflow-hidden">
-    
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img
-          src="/static/img-carrousel/foto1.webp"
-          class="d-flex w-100"
-          alt="..."
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="/static/img-carrousel/foto2.webp"
-          class="d-flex w-100"
-          alt="..."
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="/static/img-carrousel/foto3.webp"
-          class="d-flex w-100"
-          alt="..."
-        />
-      </div>
-    </div>
-    
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExample"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExample"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div> </div> ```
+      <section class="hero-section">
+        <div
+          id="carouselExample"
+          class="carousel slide carousel-fade"
+          data-bs-ride="carousel"
+          data-bs-interval="5000"
+        >
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide-to="1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExample"
+              data-bs-slide-to="2"
+            ></button>
+          </div>
 
-
-      
-  <section class="my-5">
-
-    <div class="row g-4">
-
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up
-              the bulk of the card’s content.
-            </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="carousel-overlay"></div>
+              <img
+                src="/static/img-carrousel/foto1.webp"
+                class="d-block w-100"
+                alt="Slide 1"
+              />
+              <div class="carousel-caption-custom">
+                <span class="caption-badge">Bienvenidos</span>
+                <h2>Tu salud es nuestra prioridad</h2>
+                <p>
+                  Accedé a los mejores servicios médicos con cobertura completa
+                </p>
+                <a href="{{ url_for('register') }}" class="btn-carousel"
+                  >Comenzar ahora</a
+                >
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="carousel-overlay"></div>
+              <img
+                src="/static/img-carrousel/foto2.webp"
+                class="d-block w-100"
+                alt="Slide 2"
+              />
+              <div class="carousel-caption-custom">
+                <span class="caption-badge">Cobertura</span>
+                <h2>Red de profesionales certificados</h2>
+                <p>Miles de especialistas a tu disposición en todo el país</p>
+                <a href="#" class="btn-carousel">Ver especialidades</a>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="carousel-overlay"></div>
+              <img
+                src="/static/img-carrousel/foto3.webp"
+                class="d-block w-100"
+                alt="Slide 3"
+              />
+              <div class="carousel-caption-custom">
+                <span class="caption-badge">Innovación</span>
+                <h2>Gestión 100% digital</h2>
+                <p>Turnos, autorizaciones y credenciales desde tu celular</p>
+                <a href="#" class="btn-carousel">Conocer más</a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up
-              the bulk of the card’s content.
+      <!-- Servicios Section -->
+      <section class="services-section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Servicios</span>
+            <h2 class="section-title">¿Qué podemos hacer por vos?</h2>
+            <p class="section-subtitle">
+              Descubrí todos los beneficios que tenemos para ofrecerte
             </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="service-card">
+                <div class="card-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                  </svg>
+                </div>
+                <h5 class="card-title">Consultas Médicas</h5>
+                <p class="card-text">
+                  Accedé a consultas con especialistas de todas las áreas.
+                  Turnos online las 24hs.
+                </p>
+                <a href="#" class="card-link">
+                  Solicitar turno
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="service-card featured">
+                <div class="featured-badge">Popular</div>
+                <div class="card-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                    <line x1="16" y1="2" x2="16" y2="6" />
+                    <line x1="8" y1="2" x2="8" y2="6" />
+                    <line x1="3" y1="10" x2="21" y2="10" />
+                  </svg>
+                </div>
+                <h5 class="card-title">Credencial Digital</h5>
+                <p class="card-text">
+                  Tu credencial siempre disponible en tu celular. Sin papeles ni
+                  esperas innecesarias.
+                </p>
+                <a href="#" class="card-link">
+                  Obtener credencial
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="service-card">
+                <div class="card-icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </svg>
+                </div>
+                <h5 class="card-title">Autorizaciones</h5>
+                <p class="card-text">
+                  Gestioná tus autorizaciones de forma rápida y sencilla desde
+                  la plataforma.
+                </p>
+                <a href="#" class="card-link">
+                  Gestionar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="..." class="card-img-top" alt="..." />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up
-              the bulk of the card’s content.
+      <!-- Novedades Section -->
+      <section class="news-section">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-tag">Novedades</span>
+            <h2 class="section-title">Últimas noticias</h2>
+            <p class="section-subtitle">
+              Mantenete informado sobre todo lo que pasa en Medifed
             </p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+
+          <div class="news-grid">
+            <article class="news-card news-featured">
+              <div class="news-image">
+                <img
+                  src="/static/img-carrousel/foto1.webp"
+                  alt="Noticia destacada"
+                />
+                <span class="news-category">Importante</span>
+              </div>
+              <div class="news-content">
+                <span class="news-date">20 Nov 2025</span>
+                <h3>Nueva sucursal en zona norte</h3>
+                <p>
+                  Inauguramos un nuevo centro de atención con tecnología de
+                  última generación para brindarte el mejor servicio.
+                </p>
+                <a href="#" class="news-link">Leer más</a>
+              </div>
+            </article>
+
+            <article class="news-card">
+              <div class="news-image">
+                <img src="/static/img-carrousel/foto2.webp" alt="Noticia" />
+                <span class="news-category">Salud</span>
+              </div>
+              <div class="news-content">
+                <span class="news-date">18 Nov 2025</span>
+                <h3>Campaña de vacunación antigripal</h3>
+                <p>
+                  Comenzó la campaña de vacunación. Consultá los centros
+                  habilitados.
+                </p>
+                <a href="#" class="news-link">Leer más</a>
+              </div>
+            </article>
+
+            <article class="news-card">
+              <div class="news-image">
+                <img src="/static/img-carrousel/foto3.webp" alt="Noticia" />
+                <span class="news-category">Digital</span>
+              </div>
+              <div class="news-content">
+                <span class="news-date">15 Nov 2025</span>
+                <h3>Nueva app móvil disponible</h3>
+                <p>
+                  Descargá nuestra aplicación y gestioná todo desde tu celular.
+                </p>
+                <a href="#" class="news-link">Leer más</a>
+              </div>
+            </article>
           </div>
         </div>
-      </div>
+      </section>
 
-    </div> </section>
+      <!-- Stats Section -->
+      <section class="stats-section">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-number">+50.000</span>
+              <span class="stat-label">Afiliados</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">+2.000</span>
+              <span class="stat-label">Profesionales</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">+100</span>
+              <span class="stat-label">Centros médicos</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">24/7</span>
+              <span class="stat-label">Atención online</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
-    <footer class="footer-home mt-10">
+
+    <footer class="footer-home">
       <p>&copy; 2025 Medifed. Todos los derechos reservados.</p>
     </footer>
 

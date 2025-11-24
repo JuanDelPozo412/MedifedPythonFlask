@@ -1,147 +1,224 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_contacto.css') }}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles_contacto.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
     <title>Contacto - Portal Medifed</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="portal-layout">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <img src="{{ url_for('static', filename='img/logo_comp_b.svg') }}" alt="Logo Medifed" class="logo-sidebar">
-            </div>
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="{{ url_for('portal') }}"><i class="fa-solid fa-house"></i> <span>Inicio</span></a></li>
-                    <li><a href="{{ url_for('turnos') }}"><i class="fa-solid fa-calendar-days"></i> <span>Turnos</span></a></li>
-                    <li><a href="{{ url_for('medicos') }}"><i class="fa-solid fa-user-doctor"></i> <span>Médicos</span></a></li>
-                    <li><a href="{{ url_for('estudios') }}"><i class="fa-solid fa-file-medical"></i> <span>Estudios</span></a></li>
-                    <li class="active"><a href="{{ url_for('contactoPortal') }}"><i class="fa-solid fa-envelope"></i> <span>Contacto</span></a></li>
-                    <li><a href="{{ url_for('miplan') }}"><i class="fa-solid fa-id-card"></i> <span>Mi Plan</span></a></li>
-                    <li><a href="#"><i class="fa-solid fa-file-invoice-dollar"></i> <span>Facturación</span></a></li>
-                    <li><a href="{{ url_for('chat') }}"><i class="fa-solid fa-comments"></i> <span>Chatbot</span></a></li>
-                </ul>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
-                <a href="{{ url_for('logout') }}" class="logout-button"><i class="fa-solid fa-right-from-bracket"></i> <span>Cerrar Sesión</span></a>
-            </div>
-        </aside>
-
-        <div class="main-content">
-            <header class="top-header">
-                <div class="header-left">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>NOMBRE</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div class="header-right">
-                    <div class="user-info">
-                        <span>Juand</span>
-                        <img src="https://placehold.co/40x40/6a44c7/FFFFFF?text=J" alt="Avatar de Usuario" class="user-avatar">
-                    </div>
-                </div>
-            </header>
-
-            <main class="page-content">
-                <div class="contact-container">
-                    <div class="contact-header">
-                        <i class="fa-solid fa-envelope"></i>
-                        <h1>Contáctanos</h1>
-                        <p>Estamos aquí para ayudarte. Envíanos tu consulta y te responderemos a la brevedad.</p>
-                    </div>
-
-                    <form class="contact-form" method="POST" action="{{ url_for('contactoPortal') }}">
-                        <div class="form-group">
-                            <label for="nombre">
-                                <i class="fa-solid fa-user"></i>
-                                Nombre completo
-                            </label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Juan Pérez" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">
-                                <i class="fa-solid fa-envelope"></i>
-                                Correo electrónico
-                            </label>
-                            <input type="email" id="email" name="email" placeholder="juan.perez@ejemplo.com" required />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="telefono">
-                                <i class="fa-solid fa-phone"></i>
-                                Teléfono
-                            </label>
-                            <input type="tel" id="telefono" name="telefono" placeholder="+54 9 11 1234-5678" />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="asunto">
-                                <i class="fa-solid fa-tag"></i>
-                                Asunto
-                            </label>
-                            <select id="asunto" name="asunto" required>
-                                <option value="">Selecciona un asunto</option>
-                                <option value="consulta_general">Consulta General</option>
-                                <option value="turnos">Turnos Médicos</option>
-                                <option value="facturacion">Facturación</option>
-                                <option value="cobertura">Cobertura Médica</option>
-                                <option value="reclamo">Reclamo</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="mensaje">
-                                <i class="fa-solid fa-message"></i>
-                                Mensaje
-                            </label>
-                            <textarea id="mensaje" name="mensaje" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
-                        </div>
-
-                        <button type="submit" class="submit-btn">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            Enviar Mensaje
-                        </button>
-                    </form>
-
-                    <div class="contact-info">
-                        <h3>Información de Contacto</h3>
-                        <div class="info-cards">
-                            <div class="info-card">
-                                <i class="fa-solid fa-phone"></i>
-                                <div>
-                                    <h4>Teléfono</h4>
-                                    <p>0800-123-4567</p>
-                                    <p class="secondary">Lun a Vie: 8:00 - 20:00</p>
-                                </div>
-                            </div>
-                            <div class="info-card">
-                                <i class="fa-solid fa-envelope"></i>
-                                <div>
-                                    <h4>Email</h4>
-                                    <p>contacto@medifed.com</p>
-                                    <p class="secondary">Respuesta en 24hs</p>
-                                </div>
-                            </div>
-                            <div class="info-card">
-                                <i class="fa-solid fa-location-dot"></i>
-                                <div>
-                                    <h4>Dirección</h4>
-                                    <p>Av. Corrientes 1234</p>
-                                    <p class="secondary">Buenos Aires, Argentina</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="{{ url_for('static', filename='img/logo_comp_b.svg') }}"
+            alt="Logo Medifed"
+            class="logo-sidebar"
+          />
         </div>
-    </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="{{ url_for('portal') }}"
+                ><i class="fa-solid fa-house"></i> <span>Inicio</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('turnos') }}"
+                ><i class="fa-solid fa-calendar-days"></i>
+                <span>Turnos</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('medicos') }}"
+                ><i class="fa-solid fa-user-doctor"></i> <span>Médicos</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('estudios') }}"
+                ><i class="fa-solid fa-file-medical"></i>
+                <span>Estudios</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="{{ url_for('contactoPortal') }}"
+                ><i class="fa-solid fa-envelope"></i> <span>Contacto</span></a
+              >
+            </li>
 
-</body>
+            <li>
+              <a href="#"
+                ><i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>Facturación</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('chat') }}"
+                ><i class="fa-solid fa-comments"></i> <span>Chatbot</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+          <a href="{{ url_for('logout') }}" class="logout-button"
+            ><i class="fa-solid fa-right-from-bracket"></i>
+            <span>Cerrar Sesión</span></a
+          >
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <header class="top-header">
+          <div class="header-left">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>NOMBRE</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="header-right">
+            <div class="user-info">
+              <span>Juand</span>
+              <img
+                src="https://placehold.co/40x40/6a44c7/FFFFFF?text=J"
+                alt="Avatar de Usuario"
+                class="user-avatar"
+              />
+            </div>
+          </div>
+        </header>
+
+        <main class="page-content">
+          <div class="contact-container">
+            <div class="contact-header">
+              <i class="fa-solid fa-envelope"></i>
+              <h1>Contáctanos</h1>
+              <p>
+                Estamos aquí para ayudarte. Envíanos tu consulta y te
+                responderemos a la brevedad.
+              </p>
+            </div>
+
+            <form
+              class="contact-form"
+              method="POST"
+              action="{{ url_for('contactoPortal') }}"
+            >
+              <div class="form-group">
+                <label for="nombre">
+                  <i class="fa-solid fa-user"></i>
+                  Nombre completo
+                </label>
+                <input
+                  type="text"
+                  id="nombre"
+                  name="nombre"
+                  placeholder="Juan Pérez"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">
+                  <i class="fa-solid fa-envelope"></i>
+                  Correo electrónico
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="juan.perez@ejemplo.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="telefono">
+                  <i class="fa-solid fa-phone"></i>
+                  Teléfono
+                </label>
+                <input
+                  type="tel"
+                  id="telefono"
+                  name="telefono"
+                  placeholder="+54 9 11 1234-5678"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="asunto">
+                  <i class="fa-solid fa-tag"></i>
+                  Asunto
+                </label>
+                <select id="asunto" name="asunto" required>
+                  <option value="">Selecciona un asunto</option>
+                  <option value="consulta_general">Consulta General</option>
+                  <option value="turnos">Turnos Médicos</option>
+                  <option value="facturacion">Facturación</option>
+                  <option value="cobertura">Cobertura Médica</option>
+                  <option value="reclamo">Reclamo</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="mensaje">
+                  <i class="fa-solid fa-message"></i>
+                  Mensaje
+                </label>
+                <textarea
+                  id="mensaje"
+                  name="mensaje"
+                  rows="6"
+                  placeholder="Escribe tu mensaje aquí..."
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="submit-btn">
+                <i class="fa-solid fa-paper-plane"></i>
+                Enviar Mensaje
+              </button>
+            </form>
+
+            <div class="contact-info">
+              <h3>Información de Contacto</h3>
+              <div class="info-cards">
+                <div class="info-card">
+                  <i class="fa-solid fa-phone"></i>
+                  <div>
+                    <h4>Teléfono</h4>
+                    <p>0800-123-4567</p>
+                    <p class="secondary">Lun a Vie: 8:00 - 20:00</p>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <i class="fa-solid fa-envelope"></i>
+                  <div>
+                    <h4>Email</h4>
+                    <p>contacto@medifed.com</p>
+                    <p class="secondary">Respuesta en 24hs</p>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <div>
+                    <h4>Dirección</h4>
+                    <p>Av. Corrientes 1234</p>
+                    <p class="secondary">Buenos Aires, Argentina</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
 </html>

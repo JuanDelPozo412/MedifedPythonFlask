@@ -1,11 +1,201 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>turno!!</h1>
-</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles_reservar_turno.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Reservar Turno - Medifed</title>
+  </head>
+
+  <body>
+    <div class="portal-layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="{{ url_for('static', filename='img/logo_comp_b.svg') }}"
+            alt="Logo Medifed"
+            class="logo-sidebar"
+          />
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="{{ url_for('portal') }}">
+                <i class="fa-solid fa-house"></i> <span>Inicio</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="{{ url_for('reservar_turno') }}">
+                <i class="fa-solid fa-calendar-days"></i> <span>Turnos</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('medicos') }}">
+                <i class="fa-solid fa-user-doctor"></i> <span>Médicos</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('estudios') }}">
+                <i class="fa-solid fa-file-medical"></i> <span>Estudios</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('contactoPortal') }}">
+                <i class="fa-solid fa-envelope"></i> <span>Contacto</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>Facturación</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('chat') }}">
+                <i class="fa-solid fa-comments"></i> <span>Chatbot</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+          <a href="{{ url_for('logout') }}" class="logout-button">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Cerrar Sesión</span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <header class="top-header">
+          <div class="header-left">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>NOMBRE</span>
+          </div>
+          <div class="header-right">
+            <div class="user-info">
+              <span>{{ current_user.username }}</span>
+              <div class="user-avatar">
+                {{ current_user.username[0] | upper }}
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <main class="page-content">
+          <div class="page-header">
+            <div class="header-content">
+              <i class="fa-solid fa-calendar-plus"></i>
+              <div>
+                <h1>Reserva de Turnos</h1>
+                <p>
+                  Seleccioná la especialidad y horario para tu próxima consulta
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-card">
+            <form action="{{ url_for('reservar_turno') }}" method="POST">
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fa-solid fa-stethoscope"></i> Especialidad Médica
+                </label>
+                <div class="input-wrapper">
+                  <i class="fa-solid fa-list"></i>
+                  <select name="especialidad" class="form-select" required>
+                    <option value="" selected disabled>
+                      Seleccionar especialidad...
+                    </option>
+                    <option value="Clinica Medica">Clínica Médica</option>
+                    <option value="Pediatria">Pediatría</option>
+                    <option value="Cardiologia">Cardiología</option>
+                    <option value="Dermatologia">Dermatología</option>
+                    <option value="Traumatologia">Traumatología</option>
+                    <option value="Neurologia">Neurología</option>
+                    <option value="Oftalmologia">Oftalmología</option>
+                    <option value="Ginecologia">Ginecología</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="fa-regular fa-calendar"></i> Fecha del Turno
+                  </label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-calendar-day"></i>
+                    <input
+                      type="date"
+                      name="fecha"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">
+                    <i class="fa-regular fa-clock"></i> Horario Preferido
+                  </label>
+                  <div class="input-wrapper">
+                    <i class="fa-solid fa-clock"></i>
+                    <input
+                      type="time"
+                      name="hora"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">
+                  <i class="fa-solid fa-comment-medical"></i> Motivo de la
+                  Consulta
+                </label>
+                <textarea
+                  name="motivo"
+                  class="form-control"
+                  placeholder="Describí brevemente tus síntomas o el motivo de la visita..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="info-box">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="info-box-content">
+                  <h4>Información importante</h4>
+                  <p>
+                    Recordá que podés cancelar o reprogramar tu turno hasta 24
+                    horas antes de la cita. Te enviaremos un recordatorio por
+                    email.
+                  </p>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <a href="{{ url_for('portal') }}" class="btn btn-secondary">
+                  <i class="fa-solid fa-arrow-left"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fa-solid fa-check"></i> Confirmar Turno
+                </button>
+              </div>
+            </form>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
 </html>

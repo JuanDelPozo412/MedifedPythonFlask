@@ -32,9 +32,10 @@ body {
   padding: 0 25px;
   margin-bottom: 30px;
 }
-
 .logo-sidebar {
   width: 120px;
+  height: auto;
+  display: block;
 }
 
 .sidebar-nav {
@@ -142,7 +143,12 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
+  background: #894eff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
 }
 
 .page-content {
@@ -151,7 +157,7 @@ body {
   flex-grow: 1;
 }
 
-.estudios-container {
+.medicos-container {
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -189,26 +195,6 @@ body {
 .header-content p {
   color: #666;
   font-size: 0.95rem;
-}
-
-.btn-upload {
-  background: #894eff;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-upload:hover {
-  background: #7a3ee6;
-  transform: translateY(-2px);
 }
 
 .filters-section {
@@ -286,161 +272,150 @@ body {
   border-color: #894eff;
 }
 
-.studies-section {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-.studies-section h2 {
-  font-size: 1.5rem;
-  color: #2c2a4a;
-  margin-bottom: 25px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.studies-section h2 i {
-  color: #894eff;
-}
-
-.studies-grid {
+.medicos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 20px;
 }
 
-.study-card {
-  display: flex;
-  gap: 15px;
-  padding: 20px;
-  background: #f8f9fa;
-  border-radius: 10px;
+.medico-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
   border: 2px solid #e0e0e0;
   transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
 }
 
-.study-card:hover {
+.medico-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #894eff, #667eea);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.medico-card:hover {
   border-color: #894eff;
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(137, 78, 255, 0.15);
 }
 
-.card-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
+.medico-card:hover::before {
+  transform: scaleX(1);
+}
+
+.medico-header {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.medico-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
+  color: white;
   flex-shrink: 0;
+  border: 3px solid white;
+  box-shadow: 0 4px 15px rgba(137, 78, 255, 0.3);
 }
 
-.card-icon.laboratorio {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.card-icon.radiografia {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
-}
-
-.card-icon.ecografia {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
-}
-
-.card-icon.tomografia {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-  color: white;
-}
-
-.card-content {
-  flex-grow: 1;
-}
-
-.card-content h3 {
-  font-size: 1.1rem;
+.medico-info h3 {
+  font-size: 1.2rem;
   color: #2c2a4a;
   margin-bottom: 8px;
   font-weight: 700;
 }
 
-.study-date,
-.study-doctor {
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.study-date i,
-.study-doctor i {
-  color: #894eff;
-  font-size: 0.9rem;
-}
-
-.status-badge {
+.especialidad {
   display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-top: 8px;
-  text-transform: uppercase;
+  background: #f8f5ff;
+  color: #894eff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
-.status-badge.completed {
-  background: #d4edda;
-  color: #155724;
-}
-
-.status-badge.pending {
-  background: #fff3cd;
-  color: #856404;
-}
-
-.card-actions {
+.medico-details {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.btn-icon {
-  width: 36px;
-  height: 36px;
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.detail-item i {
+  color: #894eff;
+  width: 20px;
+  text-align: center;
+}
+
+.medico-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn-action {
+  flex: 1;
+  padding: 12px 20px;
   border: none;
-  background: white;
   border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  color: #666;
+  gap: 8px;
   transition: all 0.3s ease;
-  border: 2px solid #e0e0e0;
+  font-family: "Inter", sans-serif;
 }
 
-.btn-icon:hover {
+.btn-primary {
   background: #894eff;
   color: white;
-  border-color: #894eff;
-  transform: scale(1.1);
 }
 
-/* Responsive */
+.btn-primary:hover {
+  background: #7a3ee6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(137, 78, 255, 0.3);
+}
+
+.btn-secondary {
+  background: white;
+  color: #894eff;
+  border: 2px solid #894eff;
+}
+
+.btn-secondary:hover {
+  background: #f8f5ff;
+  transform: translateY(-2px);
+}
+
 @media (max-width: 1200px) {
-  .studies-grid {
+  .medicos-grid {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 }
@@ -468,7 +443,7 @@ body {
     font-size: 2rem;
   }
 
-  .studies-grid {
+  .medicos-grid {
     grid-template-columns: 1fr;
   }
 
@@ -483,12 +458,16 @@ body {
 }
 
 @media (max-width: 480px) {
-  .study-card {
+  .medico-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .medico-actions {
     flex-direction: column;
   }
 
-  .card-actions {
-    flex-direction: row;
-    justify-content: flex-start;
+  .btn-action {
+    width: 100%;
   }
 }

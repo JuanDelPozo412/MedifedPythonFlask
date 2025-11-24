@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='styles_portal_home.css') }}">
+      href="{{ url_for('static', filename='styles_portal_home.css') }}"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -25,8 +26,8 @@
         </div>
         <nav class="sidebar-nav">
           <ul>
-            <li>
-              <a href="#"
+            <li class="active">
+              <a href="{{ url_for('portal') }}"
                 ><i class="fa-solid fa-house"></i> <span>Inicio</span></a
               >
             </li>
@@ -52,11 +53,7 @@
                 ><i class="fa-solid fa-envelope"></i> <span>Contacto</span></a
               >
             </li>
-            <li>
-              <a href="{{ url_for('miplan') }}"
-                ><i class="fa-solid fa-id-card"></i> <span>Mi Plan</span></a
-              >
-            </li>
+
             <li>
               <a href="#"
                 ><i class="fa-solid fa-file-invoice-dollar"></i>
@@ -78,28 +75,199 @@
           >
         </div>
       </aside>
-
       <div class="main-content">
         <header class="top-header">
           <div class="header-left">
             <i class="fa-solid fa-shield-halved"></i>
-            <span>NOMBRE</span>
+            <span>MEDIFED</span>
             <i class="fa-solid fa-chevron-down"></i>
           </div>
           <div class="header-right">
             <div class="user-info">
-              <span>Juand</span>
-              <img
-                src="https://placehold.co/40x40/6a44c7/FFFFFF?text=J"
-                alt="Avatar de Usuario"
-                class="user-avatar"
-              />
+              <span>{{ current_user.username }}</span>
+              <div class="user-avatar">
+                {{ current_user.username[0] | upper }}
+              </div>
             </div>
           </div>
         </header>
 
         <main class="page-content">
-          <h1>Bienvenido al Portal</h1>
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h1>Hola, {{ current_user.username }}!</h1>
+              <p>
+                Bienvenido a tu portal de salud. ¿Qué te gustaría hacer hoy?
+              </p>
+            </div>
+            <div class="welcome-actions">
+              <a
+                href="{{ url_for('reservar_turno') }}"
+                class="btn btn-primary"
+                style="
+                  text-decoration: none;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <i class="fa-solid fa-calendar-plus"></i> Nuevo Turno
+              </a>
+              <a
+                href="{{ url_for('chat') }}"
+                class="btn btn-secondary"
+                style="
+                  text-decoration: none;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 8px;
+                "
+              >
+                <i class="fa-solid fa-headset"></i> Asistencia
+              </a>
+            </div>
+          </div>
+
+          <div class="quick-actions">
+            <a
+              href="{{ url_for('reservar_turno') }}"
+              class="action-card"
+              style="text-decoration: none; color: inherit"
+            >
+              <div class="action-icon turno">
+                <i class="fa-solid fa-calendar-check"></i>
+              </div>
+              <h3>Solicitar Turno</h3>
+              <p>Agenda con tu médico</p>
+            </a>
+
+            <a
+              href="{{ url_for('medicos') }}"
+              class="action-card"
+              style="text-decoration: none; color: inherit"
+            >
+              <div class="action-icon medico">
+                <i class="fa-solid fa-user-doctor"></i>
+              </div>
+              <h3>Buscar Médico</h3>
+              <p>Encuentra especialistas</p>
+            </a>
+
+            <a
+              href="{{ url_for('estudios') }}"
+              class="action-card"
+              style="text-decoration: none; color: inherit"
+            >
+              <div class="action-icon estudio">
+                <i class="fa-solid fa-flask"></i>
+              </div>
+              <h3>Mis Estudios</h3>
+              <p>Resultados y análisis</p>
+            </a>
+
+            <a
+              href="{{ url_for('chat') }}"
+              class="action-card"
+              style="text-decoration: none; color: inherit"
+            >
+              <div class="action-icon chat">
+                <i class="fa-solid fa-robot"></i>
+              </div>
+              <h3>Asistente Virtual</h3>
+              <p>Consultas rápidas</p>
+            </a>
+          </div>
+
+          <div class="content-grid">
+            <div class="card">
+              <div class="card-header">
+                <h2><i class="fa-solid fa-bullhorn"></i> Novedades</h2>
+                <a href="#" class="see-all">Ver todas</a>
+              </div>
+              <div class="news-list">
+                <div class="news-item">
+                  <div class="news-icon info">
+                    <i class="fa-solid fa-syringe"></i>
+                  </div>
+                  <div class="news-content">
+                    <h4>Campaña de Vacunación Antigripal 2025</h4>
+                    <p>
+                      Ya está disponible la vacuna antigripal en todos nuestros
+                      centros. Sacá tu turno sin cargo.
+                    </p>
+                    <div class="news-date">Hace 2 días</div>
+                  </div>
+                </div>
+                <div class="news-item">
+                  <div class="news-icon success">
+                    <i class="fa-solid fa-clock"></i>
+                  </div>
+                  <div class="news-content">
+                    <h4>Nuevos horarios de atención</h4>
+                    <p>
+                      Ampliamos nuestros horarios de atención. Ahora también los
+                      sábados de 8 a 14hs.
+                    </p>
+                    <div class="news-date">Hace 5 días</div>
+                  </div>
+                </div>
+                <div class="news-item">
+                  <div class="news-icon alert">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                  </div>
+                  <div class="news-content">
+                    <h4>Nueva app móvil disponible</h4>
+                    <p>
+                      Descargá nuestra aplicación y llevá tu portal de salud a
+                      todos lados. Disponible en iOS y Android.
+                    </p>
+                    <div class="news-date">Hace 1 semana</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <h2><i class="fa-solid fa-calendar"></i> Próximos Turnos</h2>
+                </div>
+
+                {% if turnos %} {% for turno in turnos %}
+                <div class="appointment-item">
+                  <div class="appointment-date">
+                    {{ turno.fecha }} - {{ turno.hora }}
+                  </div>
+                  <div class="appointment-doctor">{{ turno.especialidad }}</div>
+                  <div class="appointment-specialty">
+                    {% if turno.estado == 'Confirmado' %}
+                    <span class="badge bg-success">Confirmado</span>
+                    {% elif turno.estado == 'Cancelado' %}
+                    <span class="badge bg-danger">Cancelado</span>
+                    {% else %}
+                    <span class="badge bg-warning text-dark">Pendiente</span>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %} {% else %}
+                <div class="appointment-item">
+                  <div
+                    class="appointment-doctor"
+                    style="text-align: center; color: #666"
+                  >
+                    No tienes turnos próximos.
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <div class="health-tip">
+                <h3><i class="fa-solid fa-lightbulb"></i> Consejo de Salud</h3>
+                <p>
+                  Recordá hidratarte bien durante el verano. Se recomienda beber
+                  al menos 2 litros de agua por día.
+                </p>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </div>

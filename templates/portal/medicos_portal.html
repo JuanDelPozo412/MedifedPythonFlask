@@ -1,11 +1,439 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Medicos!!</h1>
-</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles_medicos.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Médicos - Portal del Paciente</title>
+  </head>
+
+  <body>
+    <div class="portal-layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <img
+            src="{{ url_for('static', filename='img/logo_comp_b.svg') }}"
+            alt="Logo Medifed"
+            class="logo-sidebar"
+          />
+        </div>
+        <nav class="sidebar-nav">
+          <ul>
+            <li>
+              <a href="{{ url_for('portal') }}"
+                ><i class="fa-solid fa-house"></i> <span>Inicio</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('turnos') }}"
+                ><i class="fa-solid fa-calendar-days"></i>
+                <span>Turnos</span></a
+              >
+            </li>
+            <li class="active">
+              <a href="{{ url_for('medicos') }}"
+                ><i class="fa-solid fa-user-doctor"></i> <span>Médicos</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('estudios') }}"
+                ><i class="fa-solid fa-file-medical"></i>
+                <span>Estudios</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('contactoPortal') }}"
+                ><i class="fa-solid fa-envelope"></i> <span>Contacto</span></a
+              >
+            </li>
+
+            <li>
+              <a href="#"
+                ><i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>Facturación</span></a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('chat') }}"
+                ><i class="fa-solid fa-comments"></i> <span>Chatbot</span></a
+              >
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <a href="#"><i class="fa-solid fa-gear"></i> <span>Settings</span></a>
+          <a href="{{ url_for('logout') }}" class="logout-button"
+            ><i class="fa-solid fa-right-from-bracket"></i>
+            <span>Cerrar Sesión</span></a
+          >
+        </div>
+      </aside>
+
+      <div class="main-content">
+        <header class="top-header">
+          <div class="header-left">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>NOMBRE</span>
+          </div>
+          <div class="header-right">
+            <div class="user-info">
+              <span>admin</span>
+              <img
+                src="https://placehold.co/40x40/6a44c7/FFFFFF?text=JP"
+                alt="Avatar de Usuario"
+                class="user-avatar"
+              />
+            </div>
+          </div>
+        </header>
+
+        <main class="page-content">
+          <div class="medicos-container">
+            <div class="page-header">
+              <div class="header-content">
+                <i class="fas fa-stethoscope"></i>
+                <div>
+                  <h1>Nuestros Médicos</h1>
+                  <p>Profesionales especializados a tu disposición</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Filters Section -->
+            <div class="filters-section">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  placeholder="Buscar médico por nombre o especialidad..."
+                />
+              </div>
+              <div class="filter-buttons">
+                <button class="filter-btn active">
+                  <i class="fas fa-list"></i> Todos
+                </button>
+                <button class="filter-btn">
+                  <i class="fas fa-heart"></i> Cardiología
+                </button>
+                <button class="filter-btn">
+                  <i class="fas fa-brain"></i> Neurología
+                </button>
+                <button class="filter-btn">
+                  <i class="fas fa-baby"></i> Pediatría
+                </button>
+                <button class="filter-btn">
+                  <i class="fas fa-bone"></i> Traumatología
+                </button>
+                <button class="filter-btn">
+                  <i class="fas fa-eye"></i> Oftalmología
+                </button>
+              </div>
+            </div>
+
+            <!-- Medicos Grid -->
+            <div class="medicos-grid">
+              <!-- Medico Card 1 -->
+              <div class="medico-card">
+                <div class="medico-header">
+                  <div
+                    class="medico-avatar"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #667eea 0%,
+                        #764ba2 100%
+                      );
+                    "
+                  >
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                  <div class="medico-info">
+                    <h3>Dr. Carlos Martínez</h3>
+                    <span class="especialidad"
+                      ><i class="fas fa-heart"></i> Cardiología</span
+                    >
+                  </div>
+                </div>
+                <div class="medico-details">
+                  <div class="detail-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>15 años de experiencia</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Consultorio 205</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Lun - Vie: 9:00 - 17:00</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.8/5 (124 pacientes)</span>
+                  </div>
+                </div>
+                <div class="medico-actions">
+                  <button class="btn-action btn-secondary">
+                    <i class="fas fa-info-circle"></i> Ver Perfil
+                  </button>
+                </div>
+              </div>
+
+              <!-- Medico Card 2 -->
+              <div class="medico-card">
+                <div class="medico-header">
+                  <div
+                    class="medico-avatar"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #f093fb 0%,
+                        #f5576c 100%
+                      );
+                    "
+                  >
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                  <div class="medico-info">
+                    <h3>Dra. Ana Rodríguez</h3>
+                    <span class="especialidad"
+                      ><i class="fas fa-baby"></i> Pediatría</span
+                    >
+                  </div>
+                </div>
+                <div class="medico-details">
+                  <div class="detail-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>12 años de experiencia</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Consultorio 108</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Lun - Mié - Vie: 10:00 - 18:00</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.9/5 (198 pacientes)</span>
+                  </div>
+                </div>
+                <div class="medico-actions">
+                  <button class="btn-action btn-secondary">
+                    <i class="fas fa-info-circle"></i> Ver Perfil
+                  </button>
+                </div>
+              </div>
+
+              <!-- Medico Card 3 -->
+              <div class="medico-card">
+                <div class="medico-header">
+                  <div
+                    class="medico-avatar"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #4facfe 0%,
+                        #00f2fe 100%
+                      );
+                    "
+                  >
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                  <div class="medico-info">
+                    <h3>Dr. Miguel Fernández</h3>
+                    <span class="especialidad"
+                      ><i class="fas fa-brain"></i> Neurología</span
+                    >
+                  </div>
+                </div>
+                <div class="medico-details">
+                  <div class="detail-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>20 años de experiencia</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Consultorio 312</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Mar - Jue: 14:00 - 20:00</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.7/5 (87 pacientes)</span>
+                  </div>
+                </div>
+                <div class="medico-actions">
+                  <button class="btn-action btn-secondary">
+                    <i class="fas fa-info-circle"></i> Ver Perfil
+                  </button>
+                </div>
+              </div>
+
+              <!-- Medico Card 4 -->
+              <div class="medico-card">
+                <div class="medico-header">
+                  <div
+                    class="medico-avatar"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #43e97b 0%,
+                        #38f9d7 100%
+                      );
+                    "
+                  >
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                  <div class="medico-info">
+                    <h3>Dra. Laura González</h3>
+                    <span class="especialidad"
+                      ><i class="fas fa-bone"></i> Traumatología</span
+                    >
+                  </div>
+                </div>
+                <div class="medico-details">
+                  <div class="detail-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>10 años de experiencia</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Consultorio 201</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Lun - Jue: 8:00 - 16:00</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.6/5 (156 pacientes)</span>
+                  </div>
+                </div>
+                <div class="medico-actions">
+                  <button class="btn-action btn-secondary">
+                    <i class="fas fa-info-circle"></i> Ver Perfil
+                  </button>
+                </div>
+              </div>
+
+              <!-- Medico Card 5 -->
+              <div class="medico-card">
+                <div class="medico-header">
+                  <div
+                    class="medico-avatar"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #fa709a 0%,
+                        #fee140 100%
+                      );
+                    "
+                  >
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                  <div class="medico-info">
+                    <h3>Dr. Roberto Silva</h3>
+                    <span class="especialidad"
+                      ><i class="fas fa-eye"></i> Oftalmología</span
+                    >
+                  </div>
+                </div>
+                <div class="medico-details">
+                  <div class="detail-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>18 años de experiencia</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Consultorio 410</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Lun - Vie: 11:00 - 19:00</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.9/5 (203 pacientes)</span>
+                  </div>
+                </div>
+                <div class="medico-actions">
+                  <button class="btn-action btn-secondary">
+                    <i class="fas fa-info-circle"></i> Ver Perfil
+                  </button>
+                </div>
+              </div>
+
+              <!-- Medico Card 6 -->
+              <div class="medico-card">
+                <div class="medico-header">
+                  <div
+                    class="medico-avatar"
+                    style="
+                      background: linear-gradient(
+                        135deg,
+                        #a8edea 0%,
+                        #fed6e3 100%
+                      );
+                    "
+                  >
+                    <i class="fas fa-user-md"></i>
+                  </div>
+                  <div class="medico-info">
+                    <h3>Dra. Patricia López</h3>
+                    <span class="especialidad"
+                      ><i class="fas fa-venus"></i> Ginecología</span
+                    >
+                  </div>
+                </div>
+                <div class="medico-details">
+                  <div class="detail-item">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>14 años de experiencia</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Consultorio 305</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Mar - Vie: 9:00 - 17:00</span>
+                  </div>
+                  <div class="detail-item">
+                    <i class="fas fa-star"></i>
+                    <span>4.8/5 (176 pacientes)</span>
+                  </div>
+                </div>
+                <div class="medico-actions">
+                  <button class="btn-action btn-secondary">
+                    <i class="fas fa-info-circle"></i> Ver Perfil
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      const filterButtons = document.querySelectorAll(".filter-btn");
+      filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          filterButtons.forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+        });
+      });
+    </script>
+  </body>
 </html>
